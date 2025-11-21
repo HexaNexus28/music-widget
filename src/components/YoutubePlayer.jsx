@@ -1,4 +1,4 @@
-// src/components/YouTubePlayer.jsx
+// src/components/YouTubePlayer.jsx - Version simplifiée
 import React, { useState } from "react";
 
 const YouTubePlayer = () => {
@@ -18,7 +18,7 @@ const YouTubePlayer = () => {
         <iframe
           width="640"
           height="390"
-          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=http://localhost`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}`}
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen

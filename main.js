@@ -3,11 +3,6 @@ import { app, BrowserWindow, session } from 'electron';
 import * as path from 'path';
 import process from 'node:process';
 import { fileURLToPath } from 'url';
-// main.js
-
-
-
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,12 +16,20 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
+            webSecurity: false // Important pour permettre l'intégration YouTube
         },
+    });
+
+    // Configuration des permissions
+    session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+        details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36';
+        callback({ cancel: false, requestHeaders: details.requestHeaders });
     });
 
     // Charger l'URL de développement Vite
     if (process.env.NODE_ENV === 'development') {
         mainWindow.loadURL('http://localhost:5173');
+        mainWindow.webContents.openDevTools();
     } else {
         mainWindow.loadFile(path.join(__dirname, 'dist/index.html'));
     }
@@ -35,9 +38,16 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-    session.defaultSession.setUserAgent(
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'
-    );
+    // Configuration de la session pour permettre les iframes YouTube
+    session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+        const allowedPermissions = ['autoplay', 'fullscreen', 'accelerometer', 'gyroscope'];
+        if (allowedPermissions.includes(permission)) {
+            callback(true);
+        } else {
+            callback(false);
+        }
+    });
+
     createWindow();
 });
 
