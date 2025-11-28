@@ -16,7 +16,8 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            webSecurity: false // Important pour permettre l'intégration YouTube
+            webSecurity: false, // Important pour permettre l'intégration YouTube
+            allowRunningInsecureContent: true
         },
     });
 
@@ -28,9 +29,11 @@ function createWindow() {
 
     // Charger l'URL de développement Vite
     if (process.env.NODE_ENV === 'development') {
+
         mainWindow.loadURL('http://localhost:5173');
         mainWindow.webContents.openDevTools();
     } else {
+        ;
         mainWindow.loadFile(path.join(__dirname, 'dist/index.html'));
     }
 

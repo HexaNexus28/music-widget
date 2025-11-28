@@ -18,7 +18,7 @@ const YouTubePlayer = () => {
         <iframe
           width="640"
           height="390"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+          src={`https://www.youtube.com/embed/${videoId}?origin=https://www.youtube.com`}
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
