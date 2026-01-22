@@ -1,5 +1,5 @@
 // src/App.jsx
-import YouTubePlayer from "./components/YouTubePlayer";
+import YouTubePlayer from "./components/YoutubePlayer";
 
 function App() {
   return (
